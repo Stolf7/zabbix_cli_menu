@@ -53,6 +53,18 @@ def listar_host_group(api):
     )
     for group in zabbix_host_group:
         print(f"Grupo: {group['name']}\n\tId: {group['groupid']}")
+# Função relatório de host's
+def relatorio_hosts(api):
+    eventos = []
+    zabbix_relatorios_eventos = api.event.get(
+        output = ['name']
+    )
+    for incidente in zabbix_relatorios_eventos:  
+        if incidente['name'] not in eventos:
+            eventos.append(incidente['name'])
+    for problema in eventos:
+        print('Incidentes:')
+        print(problema)
 # Função menu
 def menu_zabbix(api):
     opcao_menu_status = 1
@@ -93,7 +105,7 @@ def menu_zabbix(api):
             # Função listar grupo de hosts
         elif opcao_menu == 4:
             print("")
-            print("Em desenvolvimento")
+            relatorio_hosts(api)
             print("")
             # Função relatório de hosts
         elif opcao_menu == 5:
